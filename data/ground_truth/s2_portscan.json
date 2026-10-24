@@ -1,0 +1,28 @@
+{
+  "scenario": "s2_portscan",
+  "description": "Scenario 2 - reconnaissance: SYN port scan (vertical + follow-up on a second host)",
+  "seed": 42,
+  "variant": "test",
+  "base_ts": 1793181600.0,
+  "n_packets": 27264,
+  "attacks": [
+    {
+      "label": "portscan",
+      "srcs": [
+        "192.168.10.66"
+      ],
+      "start": 1793181630.0,
+      "end": 1793181634.4701395,
+      "note": "SYN scan of 999 ports on 192.168.10.50 at ~230 probes/s"
+    },
+    {
+      "label": "portscan",
+      "srcs": [
+        "192.168.10.66"
+      ],
+      "start": 1793181639.4701395,
+      "end": 1793181681.089701,
+      "note": "SYN scan of 60 ports on 192.168.10.12 at ~2 probes/s"
+    }
+  ]
+}

@@ -1,0 +1,1699 @@
+{
+  "timing": {
+    "packets": 30293,
+    "capture_seconds": 152.84,
+    "windows": 599,
+    "extract_s": 0.465,
+    "detect_s": 1.524,
+    "models_s": 0.095,
+    "total_s": 1.989,
+    "packets_per_s": 15232.0,
+    "ms_per_window": 2.544,
+    "realtime_factor": 76.9
+  },
+  "events": [
+    {
+      "verdict": "anomaly",
+      "severity": "low",
+      "confidence": 0.51,
+      "layers": "iforest",
+      "rule_ids": "",
+      "why": "RF: benign p=0.96 | top features: mean_flow_duration=121.619 (benign median 0), frac_tcp=0 (benign median 1), pkt_rate=0.4 (benign median 4.1) | IsolationForest score -0.166 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "benign",
+          "confidence": 0.959,
+          "proba": {
+            "benign": 0.959,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 0.041,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "mean_flow_duration",
+            "observed": 121.619,
+            "benign_median": 0.0,
+            "deviation_iqr": 93.14,
+            "importance": 0.049,
+            "contribution": 4.554
+          },
+          {
+            "feature": "frac_tcp",
+            "observed": 0.0,
+            "benign_median": 1.0,
+            "deviation_iqr": -21.83,
+            "importance": 0.009,
+            "contribution": 0.202
+          },
+          {
+            "feature": "pkt_rate",
+            "observed": 0.4,
+            "benign_median": 4.1,
+            "deviation_iqr": -1.53,
+            "importance": 0.027,
+            "contribution": 0.042
+          }
+        ],
+        "iforest": {
+          "score": -0.1659,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0001",
+      "src": "192.168.10.15",
+      "window_start": "2026-10-28 10:00:20",
+      "window_end": "2026-10-28 10:00:30",
+      "dsts": "192.168.10.1",
+      "dst_ports": "",
+      "observed": {
+        "pkts": 4.0,
+        "pkt_rate": 0.4,
+        "n_flows": 1.0,
+        "n_dst_ports": 0.0,
+        "syn_count": 0.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "bruteforce",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "BF-001",
+      "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=39 >= 10 and max_conn_same_service=39 >= 10 and mean_flow_duration=0.31 <= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=39 (benign median 0), max_conn_same_service=39 (benign median 0), conn_rate=3.9 (benign median 0) | IsolationForest score -0.169 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "BF-001",
+            "name": "Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.896,
+            "checks": [
+              {
+                "feature": "auth_service_conns",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 39.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 39.0
+              },
+              {
+                "feature": "mean_flow_duration",
+                "op": "<=",
+                "threshold": 5.0,
+                "observed": 0.31
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET 22 (msg:\"BF-001 SSH brute force\"; flags:S; detection_filter:track by_src, count 10, seconds 10; sid:1000004;)"
+          }
+        ],
+        "rf": {
+          "class": "bruteforce",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 1.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "auth_service_conns",
+            "observed": 39.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 28.45,
+            "importance": 0.051,
+            "contribution": 1.463
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 39.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 5.32,
+            "importance": 0.063,
+            "contribution": 0.333
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 3.9,
+            "benign_median": 0.0,
+            "deviation_iqr": 6.06,
+            "importance": 0.044,
+            "contribution": 0.267
+          }
+        ],
+        "iforest": {
+          "score": -0.1692,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0002",
+      "src": "203.0.113.45",
+      "window_start": "2026-10-28 10:00:20",
+      "window_end": "2026-10-28 10:00:30",
+      "dsts": "192.168.10.50",
+      "dst_ports": "22",
+      "observed": {
+        "pkts": 272.0,
+        "pkt_rate": 27.2,
+        "n_flows": 39.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 39.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "bruteforce",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "BF-001",
+      "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=69 >= 10 and max_conn_same_service=69 >= 10 and mean_flow_duration=0.31 <= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=69 (benign median 0), max_conn_same_service=69 (benign median 0), conn_rate=6.9 (benign median 0) | IsolationForest score -0.173 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "BF-001",
+            "name": "Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.979,
+            "checks": [
+              {
+                "feature": "auth_service_conns",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 69.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 69.0
+              },
+              {
+                "feature": "mean_flow_duration",
+                "op": "<=",
+                "threshold": 5.0,
+                "observed": 0.31
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET 22 (msg:\"BF-001 SSH brute force\"; flags:S; detection_filter:track by_src, count 10, seconds 10; sid:1000004;)"
+          }
+        ],
+        "rf": {
+          "class": "bruteforce",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 1.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "auth_service_conns",
+            "observed": 69.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 32.76,
+            "importance": 0.051,
+            "contribution": 1.685
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 69.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 6.13,
+            "importance": 0.063,
+            "contribution": 0.384
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 6.9,
+            "benign_median": 0.0,
+            "deviation_iqr": 7.88,
+            "importance": 0.044,
+            "contribution": 0.348
+          }
+        ],
+        "iforest": {
+          "score": -0.1735,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0003",
+      "src": "203.0.113.45",
+      "window_start": "2026-10-28 10:00:30",
+      "window_end": "2026-10-28 10:00:40",
+      "dsts": "192.168.10.50",
+      "dst_ports": "22",
+      "observed": {
+        "pkts": 474.0,
+        "pkt_rate": 47.4,
+        "n_flows": 69.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 69.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "bruteforce",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "BF-001",
+      "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=61 >= 10 and max_conn_same_service=61 >= 10 and mean_flow_duration=0.31 <= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=61 (benign median 0), max_conn_same_service=61 (benign median 0), conn_rate=6.1 (benign median 0) | IsolationForest score -0.169 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "BF-001",
+            "name": "Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.961,
+            "checks": [
+              {
+                "feature": "auth_service_conns",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 61.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 61.0
+              },
+              {
+                "feature": "mean_flow_duration",
+                "op": "<=",
+                "threshold": 5.0,
+                "observed": 0.31
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET 22 (msg:\"BF-001 SSH brute force\"; flags:S; detection_filter:track by_src, count 10, seconds 10; sid:1000004;)"
+          }
+        ],
+        "rf": {
+          "class": "bruteforce",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 1.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "auth_service_conns",
+            "observed": 61.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 31.83,
+            "importance": 0.051,
+            "contribution": 1.637
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 61.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 5.95,
+            "importance": 0.063,
+            "contribution": 0.373
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 6.1,
+            "benign_median": 0.0,
+            "deviation_iqr": 7.47,
+            "importance": 0.044,
+            "contribution": 0.33
+          }
+        ],
+        "iforest": {
+          "score": -0.1694,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0004",
+      "src": "203.0.113.45",
+      "window_start": "2026-10-28 10:00:40",
+      "window_end": "2026-10-28 10:00:50",
+      "dsts": "192.168.10.50",
+      "dst_ports": "22",
+      "observed": {
+        "pkts": 434.0,
+        "pkt_rate": 43.4,
+        "n_flows": 61.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 61.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "bruteforce",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "BF-001",
+      "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=54 >= 10 and max_conn_same_service=54 >= 10 and mean_flow_duration=0.31 <= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=54 (benign median 0), max_conn_same_service=54 (benign median 0), conn_rate=5.4 (benign median 0) | IsolationForest score -0.173 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "BF-001",
+            "name": "Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.943,
+            "checks": [
+              {
+                "feature": "auth_service_conns",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 54.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 54.0
+              },
+              {
+                "feature": "mean_flow_duration",
+                "op": "<=",
+                "threshold": 5.0,
+                "observed": 0.31
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET 22 (msg:\"BF-001 SSH brute force\"; flags:S; detection_filter:track by_src, count 10, seconds 10; sid:1000004;)"
+          }
+        ],
+        "rf": {
+          "class": "bruteforce",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 1.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "auth_service_conns",
+            "observed": 54.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 30.9,
+            "importance": 0.051,
+            "contribution": 1.589
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 54.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 5.78,
+            "importance": 0.063,
+            "contribution": 0.362
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 5.4,
+            "benign_median": 0.0,
+            "deviation_iqr": 7.08,
+            "importance": 0.044,
+            "contribution": 0.312
+          }
+        ],
+        "iforest": {
+          "score": -0.1726,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0005",
+      "src": "203.0.113.45",
+      "window_start": "2026-10-28 10:00:50",
+      "window_end": "2026-10-28 10:01:00",
+      "dsts": "192.168.10.50",
+      "dst_ports": "22",
+      "observed": {
+        "pkts": 374.0,
+        "pkt_rate": 37.4,
+        "n_flows": 54.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 54.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "bruteforce",
+      "severity": "medium",
+      "confidence": 0.792,
+      "layers": "rf",
+      "rule_ids": "",
+      "why": "RF: bruteforce p=0.79 | top features: auth_service_conns=2 (benign median 0), mean_flow_duration=0.31 (benign median 0), syn_ack_ratio=0.1 (benign median 0) | IsolationForest score -0.094 (threshold -0.161)",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "bruteforce",
+          "confidence": 0.792,
+          "proba": {
+            "benign": 0.208,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 0.792,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "auth_service_conns",
+            "observed": 2.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 8.47,
+            "importance": 0.051,
+            "contribution": 0.436
+          },
+          {
+            "feature": "mean_flow_duration",
+            "observed": 0.31,
+            "benign_median": 0.0,
+            "deviation_iqr": 5.23,
+            "importance": 0.049,
+            "contribution": 0.256
+          },
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 0.1,
+            "benign_median": 0.0,
+            "deviation_iqr": 1.52,
+            "importance": 0.097,
+            "contribution": 0.148
+          }
+        ],
+        "iforest": {
+          "score": -0.0938,
+          "threshold": -0.161,
+          "anomalous": false
+        }
+      },
+      "event_id": "EVT-0006",
+      "src": "203.0.113.45",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.50",
+      "dst_ports": "22",
+      "observed": {
+        "pkts": 21.0,
+        "pkt_rate": 2.1,
+        "n_flows": 2.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "bruteforce",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "BF-001,BF-002",
+      "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=17 >= 10 and max_conn_same_service=17 >= 10 and mean_flow_duration=0.912 <= 5 | BF-002 (Repeated login failures in clear-text protocol): auth_failures=17 >= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=17 (benign median 0), mean_flow_duration=0.912 (benign median 0), syn_ack_ratio=0.25 (benign median 0) | IsolationForest score -0.162 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "BF-001",
+            "name": "Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.777,
+            "checks": [
+              {
+                "feature": "auth_service_conns",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 17.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 17.0
+              },
+              {
+                "feature": "mean_flow_duration",
+                "op": "<=",
+                "threshold": 5.0,
+                "observed": 0.912
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET 22 (msg:\"BF-001 SSH brute force\"; flags:S; detection_filter:track by_src, count 10, seconds 10; sid:1000004;)"
+          },
+          {
+            "rule_id": "BF-002",
+            "name": "Repeated login failures in clear-text protocol",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.877,
+            "checks": [
+              {
+                "feature": "auth_failures",
+                "op": ">=",
+                "threshold": 5,
+                "observed": 17.0
+              }
+            ],
+            "snort": "alert tcp $HOME_NET 21 -> any any (msg:\"BF-002 FTP login failed\"; content:\"530 \"; depth:4; detection_filter:track by_dst, count 5, seconds 10; sid:1000005;)"
+          }
+        ],
+        "rf": {
+          "class": "bruteforce",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 1.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "auth_service_conns",
+            "observed": 17.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 22.29,
+            "importance": 0.051,
+            "contribution": 1.146
+          },
+          {
+            "feature": "mean_flow_duration",
+            "observed": 0.912,
+            "benign_median": 0.0,
+            "deviation_iqr": 12.55,
+            "importance": 0.049,
+            "contribution": 0.614
+          },
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 0.25,
+            "benign_median": 0.0,
+            "deviation_iqr": 3.57,
+            "importance": 0.097,
+            "contribution": 0.346
+          }
+        ],
+        "iforest": {
+          "score": -0.162,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0007",
+      "src": "192.168.10.77",
+      "window_start": "2026-10-28 10:01:10",
+      "window_end": "2026-10-28 10:01:20",
+      "dsts": "192.168.10.50",
+      "dst_ports": "21",
+      "observed": {
+        "pkts": 84.0,
+        "pkt_rate": 8.4,
+        "n_flows": 17.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 17.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 17.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "bruteforce",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "BF-001,BF-002",
+      "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=27 >= 10 and max_conn_same_service=27 >= 10 and mean_flow_duration=0.912 <= 5 | BF-002 (Repeated login failures in clear-text protocol): auth_failures=27 >= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=27 (benign median 0), mean_flow_duration=0.912 (benign median 0), syn_ack_ratio=0.25 (benign median 0) | IsolationForest score -0.173 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "BF-001",
+            "name": "Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.843,
+            "checks": [
+              {
+                "feature": "auth_service_conns",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 27.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 27.0
+              },
+              {
+                "feature": "mean_flow_duration",
+                "op": "<=",
+                "threshold": 5.0,
+                "observed": 0.912
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET 22 (msg:\"BF-001 SSH brute force\"; flags:S; detection_filter:track by_src, count 10, seconds 10; sid:1000004;)"
+          },
+          {
+            "rule_id": "BF-002",
+            "name": "Repeated login failures in clear-text protocol",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.943,
+            "checks": [
+              {
+                "feature": "auth_failures",
+                "op": ">=",
+                "threshold": 5,
+                "observed": 27.0
+              }
+            ],
+            "snort": "alert tcp $HOME_NET 21 -> any any (msg:\"BF-002 FTP login failed\"; content:\"530 \"; depth:4; detection_filter:track by_dst, count 5, seconds 10; sid:1000005;)"
+          }
+        ],
+        "rf": {
+          "class": "bruteforce",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 1.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "auth_service_conns",
+            "observed": 27.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 25.7,
+            "importance": 0.051,
+            "contribution": 1.321
+          },
+          {
+            "feature": "mean_flow_duration",
+            "observed": 0.912,
+            "benign_median": 0.0,
+            "deviation_iqr": 12.55,
+            "importance": 0.049,
+            "contribution": 0.614
+          },
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 0.25,
+            "benign_median": 0.0,
+            "deviation_iqr": 3.57,
+            "importance": 0.097,
+            "contribution": 0.346
+          }
+        ],
+        "iforest": {
+          "score": -0.1728,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0008",
+      "src": "192.168.10.77",
+      "window_start": "2026-10-28 10:01:20",
+      "window_end": "2026-10-28 10:01:30",
+      "dsts": "192.168.10.50",
+      "dst_ports": "21",
+      "observed": {
+        "pkts": 134.0,
+        "pkt_rate": 13.4,
+        "n_flows": 27.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 27.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 27.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "bruteforce",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf",
+      "rule_ids": "BF-001,BF-002",
+      "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=16 >= 10 and max_conn_same_service=16 >= 10 and mean_flow_duration=0.912 <= 5 | BF-002 (Repeated login failures in clear-text protocol): auth_failures=16 >= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=16 (benign median 0), mean_flow_duration=0.912 (benign median 0), syn_ack_ratio=0.239 (benign median 0) | IsolationForest score -0.160 (threshold -0.161)",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "BF-001",
+            "name": "Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.768,
+            "checks": [
+              {
+                "feature": "auth_service_conns",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 16.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 10,
+                "observed": 16.0
+              },
+              {
+                "feature": "mean_flow_duration",
+                "op": "<=",
+                "threshold": 5.0,
+                "observed": 0.912
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET 22 (msg:\"BF-001 SSH brute force\"; flags:S; detection_filter:track by_src, count 10, seconds 10; sid:1000004;)"
+          },
+          {
+            "rule_id": "BF-002",
+            "name": "Repeated login failures in clear-text protocol",
+            "label": "bruteforce",
+            "severity": "medium",
+            "confidence": 0.868,
+            "checks": [
+              {
+                "feature": "auth_failures",
+                "op": ">=",
+                "threshold": 5,
+                "observed": 16.0
+              }
+            ],
+            "snort": "alert tcp $HOME_NET 21 -> any any (msg:\"BF-002 FTP login failed\"; content:\"530 \"; depth:4; detection_filter:track by_dst, count 5, seconds 10; sid:1000005;)"
+          }
+        ],
+        "rf": {
+          "class": "bruteforce",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 1.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "auth_service_conns",
+            "observed": 16.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 21.85,
+            "importance": 0.051,
+            "contribution": 1.123
+          },
+          {
+            "feature": "mean_flow_duration",
+            "observed": 0.912,
+            "benign_median": 0.0,
+            "deviation_iqr": 12.55,
+            "importance": 0.049,
+            "contribution": 0.614
+          },
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 0.239,
+            "benign_median": 0.0,
+            "deviation_iqr": 3.43,
+            "importance": 0.097,
+            "contribution": 0.332
+          }
+        ],
+        "iforest": {
+          "score": -0.1605,
+          "threshold": -0.161,
+          "anomalous": false
+        }
+      },
+      "event_id": "EVT-0009",
+      "src": "192.168.10.77",
+      "window_start": "2026-10-28 10:01:30",
+      "window_end": "2026-10-28 10:01:40",
+      "dsts": "192.168.10.50",
+      "dst_ports": "21",
+      "observed": {
+        "pkts": 82.0,
+        "pkt_rate": 8.2,
+        "n_flows": 16.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 16.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 16.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "arpspoof",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf",
+      "rule_ids": "ARP-001,ARP-002",
+      "why": "ARP-001 (ARP IP-to-MAC binding changed (spoofing / MITM)): arp_ip_mac_changes=30 >= 1 | ARP-002 (Unsolicited ARP replies (poisoning)): arp_unsolicited=29 >= 5 | RF: arpspoof p=1.00 | top features: arp_unsolicited=29 (benign median 0), arp_ip_mac_changes=30 (benign median 0), arp_replies=30 (benign median 0) | IsolationForest score -0.140 (threshold -0.161)",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "ARP-001",
+            "name": "ARP IP-to-MAC binding changed (spoofing / MITM)",
+            "label": "arpspoof",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "arp_ip_mac_changes",
+                "op": ">=",
+                "threshold": 1,
+                "observed": 30.0
+              }
+            ],
+            "snort": "# arpspoof preprocessor equivalent: IP already bound to a different MAC (sid 112:2 style)"
+          },
+          {
+            "rule_id": "ARP-002",
+            "name": "Unsolicited ARP replies (poisoning)",
+            "label": "arpspoof",
+            "severity": "medium",
+            "confidence": 0.954,
+            "checks": [
+              {
+                "feature": "arp_unsolicited",
+                "op": ">=",
+                "threshold": 5,
+                "observed": 29.0
+              }
+            ],
+            "snort": "# arpspoof preprocessor equivalent: ARP replies with no matching request, >=5 in 10 s"
+          }
+        ],
+        "rf": {
+          "class": "arpspoof",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 0.0,
+            "arpspoof": 1.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "arp_unsolicited",
+            "observed": 29.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 34.01,
+            "importance": 0.065,
+            "contribution": 2.197
+          },
+          {
+            "feature": "arp_ip_mac_changes",
+            "observed": 30.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 34.34,
+            "importance": 0.062,
+            "contribution": 2.14
+          },
+          {
+            "feature": "arp_replies",
+            "observed": 30.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.88,
+            "importance": 0.061,
+            "contribution": 0.723
+          }
+        ],
+        "iforest": {
+          "score": -0.1402,
+          "threshold": -0.161,
+          "anomalous": false
+        }
+      },
+      "event_id": "EVT-0010",
+      "src": "192.168.10.99",
+      "window_start": "2026-10-28 10:01:40",
+      "window_end": "2026-10-28 10:01:50",
+      "dsts": "8.8.8.8",
+      "dst_ports": "53",
+      "observed": {
+        "pkts": 34.0,
+        "pkt_rate": 3.4,
+        "n_flows": 4.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 0.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 30.0
+      }
+    },
+    {
+      "verdict": "arpspoof",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf",
+      "rule_ids": "ARP-001,ARP-002",
+      "why": "ARP-001 (ARP IP-to-MAC binding changed (spoofing / MITM)): arp_ip_mac_changes=24 >= 1 | ARP-002 (Unsolicited ARP replies (poisoning)): arp_unsolicited=24 >= 5 | RF: arpspoof p=0.99 | top features: arp_unsolicited=24 (benign median 0), arp_ip_mac_changes=24 (benign median 0), arp_replies=24 (benign median 0) | IsolationForest score -0.144 (threshold -0.161)",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "ARP-001",
+            "name": "ARP IP-to-MAC binding changed (spoofing / MITM)",
+            "label": "arpspoof",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "arp_ip_mac_changes",
+                "op": ">=",
+                "threshold": 1,
+                "observed": 24.0
+              }
+            ],
+            "snort": "# arpspoof preprocessor equivalent: IP already bound to a different MAC (sid 112:2 style)"
+          },
+          {
+            "rule_id": "ARP-002",
+            "name": "Unsolicited ARP replies (poisoning)",
+            "label": "arpspoof",
+            "severity": "medium",
+            "confidence": 0.926,
+            "checks": [
+              {
+                "feature": "arp_unsolicited",
+                "op": ">=",
+                "threshold": 5,
+                "observed": 24.0
+              }
+            ],
+            "snort": "# arpspoof preprocessor equivalent: ARP replies with no matching request, >=5 in 10 s"
+          }
+        ],
+        "rf": {
+          "class": "arpspoof",
+          "confidence": 0.986,
+          "proba": {
+            "benign": 0.014,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.986
+          }
+        },
+        "top_features": [
+          {
+            "feature": "arp_unsolicited",
+            "observed": 24.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 32.19,
+            "importance": 0.065,
+            "contribution": 2.079
+          },
+          {
+            "feature": "arp_ip_mac_changes",
+            "observed": 24.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 32.19,
+            "importance": 0.062,
+            "contribution": 2.006
+          },
+          {
+            "feature": "arp_replies",
+            "observed": 24.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.14,
+            "importance": 0.061,
+            "contribution": 0.677
+          }
+        ],
+        "iforest": {
+          "score": -0.1436,
+          "threshold": -0.161,
+          "anomalous": false
+        }
+      },
+      "event_id": "EVT-0011",
+      "src": "192.168.10.99",
+      "window_start": "2026-10-28 10:01:50",
+      "window_end": "2026-10-28 10:02:00",
+      "dsts": "8.8.8.8",
+      "dst_ports": "53",
+      "observed": {
+        "pkts": 26.0,
+        "pkt_rate": 2.6,
+        "n_flows": 2.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 0.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 24.0
+      }
+    },
+    {
+      "verdict": "arpspoof",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf",
+      "rule_ids": "ARP-001,ARP-002",
+      "why": "ARP-001 (ARP IP-to-MAC binding changed (spoofing / MITM)): arp_ip_mac_changes=30 >= 1 | ARP-002 (Unsolicited ARP replies (poisoning)): arp_unsolicited=28 >= 5 | RF: arpspoof p=1.00 | top features: arp_unsolicited=28 (benign median 0), arp_ip_mac_changes=30 (benign median 0), arp_replies=30 (benign median 0) | IsolationForest score -0.115 (threshold -0.161)",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "ARP-001",
+            "name": "ARP IP-to-MAC binding changed (spoofing / MITM)",
+            "label": "arpspoof",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "arp_ip_mac_changes",
+                "op": ">=",
+                "threshold": 1,
+                "observed": 30.0
+              }
+            ],
+            "snort": "# arpspoof preprocessor equivalent: IP already bound to a different MAC (sid 112:2 style)"
+          },
+          {
+            "rule_id": "ARP-002",
+            "name": "Unsolicited ARP replies (poisoning)",
+            "label": "arpspoof",
+            "severity": "medium",
+            "confidence": 0.949,
+            "checks": [
+              {
+                "feature": "arp_unsolicited",
+                "op": ">=",
+                "threshold": 5,
+                "observed": 28.0
+              }
+            ],
+            "snort": "# arpspoof preprocessor equivalent: ARP replies with no matching request, >=5 in 10 s"
+          }
+        ],
+        "rf": {
+          "class": "arpspoof",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 0.0,
+            "arpspoof": 1.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "arp_unsolicited",
+            "observed": 28.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 33.67,
+            "importance": 0.065,
+            "contribution": 2.175
+          },
+          {
+            "feature": "arp_ip_mac_changes",
+            "observed": 30.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 34.34,
+            "importance": 0.062,
+            "contribution": 2.14
+          },
+          {
+            "feature": "arp_replies",
+            "observed": 30.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.88,
+            "importance": 0.061,
+            "contribution": 0.723
+          }
+        ],
+        "iforest": {
+          "score": -0.1153,
+          "threshold": -0.161,
+          "anomalous": false
+        }
+      },
+      "event_id": "EVT-0012",
+      "src": "192.168.10.99",
+      "window_start": "2026-10-28 10:02:00",
+      "window_end": "2026-10-28 10:02:10",
+      "dsts": "",
+      "dst_ports": "",
+      "observed": {
+        "pkts": 30.0,
+        "pkt_rate": 3.0,
+        "n_flows": 0.0,
+        "n_dst_ports": 0.0,
+        "syn_count": 0.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 30.0
+      }
+    },
+    {
+      "verdict": "arpspoof",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf",
+      "rule_ids": "ARP-001,ARP-002",
+      "why": "ARP-001 (ARP IP-to-MAC binding changed (spoofing / MITM)): arp_ip_mac_changes=24 >= 1 | ARP-002 (Unsolicited ARP replies (poisoning)): arp_unsolicited=21 >= 5 | RF: arpspoof p=0.99 | top features: arp_ip_mac_changes=24 (benign median 0), arp_unsolicited=21 (benign median 0), arp_replies=24 (benign median 0) | IsolationForest score -0.116 (threshold -0.161)",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "ARP-001",
+            "name": "ARP IP-to-MAC binding changed (spoofing / MITM)",
+            "label": "arpspoof",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "arp_ip_mac_changes",
+                "op": ">=",
+                "threshold": 1,
+                "observed": 24.0
+              }
+            ],
+            "snort": "# arpspoof preprocessor equivalent: IP already bound to a different MAC (sid 112:2 style)"
+          },
+          {
+            "rule_id": "ARP-002",
+            "name": "Unsolicited ARP replies (poisoning)",
+            "label": "arpspoof",
+            "severity": "medium",
+            "confidence": 0.907,
+            "checks": [
+              {
+                "feature": "arp_unsolicited",
+                "op": ">=",
+                "threshold": 5,
+                "observed": 21.0
+              }
+            ],
+            "snort": "# arpspoof preprocessor equivalent: ARP replies with no matching request, >=5 in 10 s"
+          }
+        ],
+        "rf": {
+          "class": "arpspoof",
+          "confidence": 0.986,
+          "proba": {
+            "benign": 0.014,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.986
+          }
+        },
+        "top_features": [
+          {
+            "feature": "arp_ip_mac_changes",
+            "observed": 24.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 32.19,
+            "importance": 0.062,
+            "contribution": 2.006
+          },
+          {
+            "feature": "arp_unsolicited",
+            "observed": 21.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 30.91,
+            "importance": 0.065,
+            "contribution": 1.997
+          },
+          {
+            "feature": "arp_replies",
+            "observed": 24.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.14,
+            "importance": 0.061,
+            "contribution": 0.677
+          }
+        ],
+        "iforest": {
+          "score": -0.1164,
+          "threshold": -0.161,
+          "anomalous": false
+        }
+      },
+      "event_id": "EVT-0013",
+      "src": "192.168.10.99",
+      "window_start": "2026-10-28 10:02:10",
+      "window_end": "2026-10-28 10:02:20",
+      "dsts": "",
+      "dst_ports": "",
+      "observed": {
+        "pkts": 24.0,
+        "pkt_rate": 2.4,
+        "n_flows": 0.0,
+        "n_dst_ports": 0.0,
+        "syn_count": 0.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 24.0
+      }
+    }
+  ],
+  "victim_alerts": [],
+  "arp_events": [
+    {
+      "ts": 1793181700.0,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181700.0,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181700.0,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181700.001,
+      "ip": "192.168.10.12",
+      "known_mac": "02:00:00:00:00:0c",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181700.001,
+      "ip": "192.168.10.14",
+      "known_mac": "02:00:00:00:00:0e",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181700.001,
+      "ip": "192.168.10.15",
+      "known_mac": "02:00:00:00:00:0f",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181702.25,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181702.25,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181702.25,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181702.251,
+      "ip": "192.168.10.12",
+      "known_mac": "02:00:00:00:00:0c",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181702.251,
+      "ip": "192.168.10.14",
+      "known_mac": "02:00:00:00:00:0e",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181702.251,
+      "ip": "192.168.10.15",
+      "known_mac": "02:00:00:00:00:0f",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181704.5,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181704.5,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181704.5,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181704.501,
+      "ip": "192.168.10.12",
+      "known_mac": "02:00:00:00:00:0c",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181704.501,
+      "ip": "192.168.10.14",
+      "known_mac": "02:00:00:00:00:0e",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181704.501,
+      "ip": "192.168.10.15",
+      "known_mac": "02:00:00:00:00:0f",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181706.75,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181706.75,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181706.75,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181706.751,
+      "ip": "192.168.10.12",
+      "known_mac": "02:00:00:00:00:0c",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181706.751,
+      "ip": "192.168.10.14",
+      "known_mac": "02:00:00:00:00:0e",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181706.751,
+      "ip": "192.168.10.15",
+      "known_mac": "02:00:00:00:00:0f",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181709.0,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181709.0,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181709.0,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181709.001,
+      "ip": "192.168.10.12",
+      "known_mac": "02:00:00:00:00:0c",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181709.001,
+      "ip": "192.168.10.14",
+      "known_mac": "02:00:00:00:00:0e",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181709.001,
+      "ip": "192.168.10.15",
+      "known_mac": "02:00:00:00:00:0f",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181711.25,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181711.25,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181711.25,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181711.251,
+      "ip": "192.168.10.12",
+      "known_mac": "02:00:00:00:00:0c",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181711.251,
+      "ip": "192.168.10.14",
+      "known_mac": "02:00:00:00:00:0e",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181711.251,
+      "ip": "192.168.10.15",
+      "known_mac": "02:00:00:00:00:0f",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181713.5,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181713.5,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181713.5,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181713.501,
+      "ip": "192.168.10.12",
+      "known_mac": "02:00:00:00:00:0c",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181713.501,
+      "ip": "192.168.10.14",
+      "known_mac": "02:00:00:00:00:0e",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181713.501,
+      "ip": "192.168.10.15",
+      "known_mac": "02:00:00:00:00:0f",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181715.75,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181715.75,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181715.75,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181715.751,
+      "ip": "192.168.10.12",
+      "known_mac": "02:00:00:00:00:0c",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181715.751,
+      "ip": "192.168.10.14",
+      "known_mac": "02:00:00:00:00:0e",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181715.751,
+      "ip": "192.168.10.15",
+      "known_mac": "02:00:00:00:00:0f",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181718.0,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    },
+    {
+      "ts": 1793181718.0,
+      "ip": "192.168.10.1",
+      "known_mac": "02:00:00:00:00:01",
+      "claimed_mac": "02:00:00:00:00:63",
+      "sender": "192.168.10.99",
+      "op": "reply"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "n_windows": 6634,
+  "class_counts": {
+    "benign": 6532,
+    "dos": 51,
+    "bruteforce": 20,
+    "portscan": 19,
+    "arpspoof": 12
+  },
+  "grouped_cv_rf": {
+    "arpspoof": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 12.0
+    },
+    "benign": {
+      "precision": 0.9998469075321494,
+      "recall": 0.9998469075321494,
+      "f1-score": 0.9998469075321494,
+      "support": 6532.0
+    },
+    "bruteforce": {
+      "precision": 1.0,
+      "recall": 0.95,
+      "f1-score": 0.9743589743589743,
+      "support": 20.0
+    },
+    "dos": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 51.0
+    },
+    "portscan": {
+      "precision": 0.95,
+      "recall": 1.0,
+      "f1-score": 0.9743589743589743,
+      "support": 19.0
+    },
+    "macro avg": {
+      "precision": 0.98996938150643,
+      "recall": 0.98996938150643,
+      "f1-score": 0.9897129712500196,
+      "support": 6634.0
+    },
+    "weighted avg": {
+      "precision": 0.9997060596924933,
+      "recall": 0.9996985227615315,
+      "f1-score": 0.9996985227615315,
+      "support": 6634.0
+    }
+  },
+  "grouped_cv_accuracy": 0.9996985227615315,
+  "iforest_threshold": -0.16101661170206683,
+  "feature_importances": [
+    {
+      "feature": "syn_ack_ratio",
+      "importance": 0.097
+    },
+    {
+      "feature": "n_dst_ports",
+      "importance": 0.0651
+    },
+    {
+      "feature": "arp_unsolicited",
+      "importance": 0.0646
+    },
+    {
+      "feature": "max_conn_same_service",
+      "importance": 0.0626
+    },
+    {
+      "feature": "arp_ip_mac_changes",
+      "importance": 0.0623
+    },
+    {
+      "feature": "arp_replies",
+      "importance": 0.0608
+    },
+    {
+      "feature": "rejected_ratio",
+      "importance": 0.0537
+    },
+    {
+      "feature": "syn_ratio",
+      "importance": 0.0516
+    },
+    {
+      "feature": "syn_count",
+      "importance": 0.0515
+    },
+    {
+      "feature": "auth_service_conns",
+      "importance": 0.0514
+    },
+    {
+      "feature": "mean_flow_duration",
+      "importance": 0.0489
+    },
+    {
+      "feature": "handshake_completion",
+      "importance": 0.0467
+    },
+    {
+      "feature": "conn_rate",
+      "importance": 0.0442
+    },
+    {
+      "feature": "n_flows",
+      "importance": 0.0373
+    },
+    {
+      "feature": "frac_arp",
+      "importance": 0.0284
+    },
+    {
+      "feature": "pkt_rate",
+      "importance": 0.0274
+    },
+    {
+      "feature": "mean_pkt_size",
+      "importance": 0.0263
+    },
+    {
+      "feature": "pkts",
+      "importance": 0.0175
+    },
+    {
+      "feature": "mean_flow_bytes",
+      "importance": 0.0166
+    },
+    {
+      "feature": "bytes",
+      "importance": 0.0159
+    },
+    {
+      "feature": "mean_flow_pkts",
+      "importance": 0.0157
+    },
+    {
+      "feature": "frac_short_flows",
+      "importance": 0.0153
+    },
+    {
+      "feature": "byte_rate",
+      "importance": 0.011
+    },
+    {
+      "feature": "frac_tcp",
+      "importance": 0.0092
+    },
+    {
+      "feature": "n_dst_ips",
+      "importance": 0.0071
+    },
+    {
+      "feature": "fin_sent",
+      "importance": 0.0043
+    },
+    {
+      "feature": "frac_udp",
+      "importance": 0.0033
+    },
+    {
+      "feature": "rst_sent",
+      "importance": 0.0019
+    },
+    {
+      "feature": "synack_sent",
+      "importance": 0.0017
+    },
+    {
+      "feature": "auth_failures",
+      "importance": 0.0005
+    },
+    {
+      "feature": "frac_icmp",
+      "importance": 0.0004
+    },
+    {
+      "feature": "arp_requests",
+      "importance": 0.0
+    }
+  ]
+}

@@ -1,0 +1,1031 @@
+{
+  "unit": "host-window (source x 10 s)",
+  "per_scenario": {
+    "s1_benign": {
+      "description": "Scenario 1 - normal traffic baseline (DNS, HTTP, TLS, ICMP, SSH admin session, ARP)",
+      "windows": 566,
+      "malicious_windows": 0,
+      "layers": {
+        "rules only": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 566,
+          "precision": 1.0,
+          "recall": null,
+          "f1": null,
+          "accuracy": 1.0,
+          "fpr": 0.0
+        },
+        "RandomForest only": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 566,
+          "precision": 1.0,
+          "recall": null,
+          "f1": null,
+          "accuracy": 1.0,
+          "fpr": 0.0
+        },
+        "IsolationForest only": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 566,
+          "precision": 1.0,
+          "recall": null,
+          "f1": null,
+          "accuracy": 1.0,
+          "fpr": 0.0
+        },
+        "hybrid (final)": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 566,
+          "precision": 1.0,
+          "recall": null,
+          "f1": null,
+          "accuracy": 1.0,
+          "fpr": 0.0
+        },
+        "hybrid, medium+ severity": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 566,
+          "precision": 1.0,
+          "recall": null,
+          "f1": null,
+          "accuracy": 1.0,
+          "fpr": 0.0
+        }
+      },
+      "verdict_counts": {},
+      "victim_alerts": 0
+    },
+    "s2_portscan": {
+      "description": "Scenario 2 - reconnaissance: SYN port scan (vertical + follow-up on a second host)",
+      "windows": 515,
+      "malicious_windows": 6,
+      "layers": {
+        "rules only": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 4,
+          "tn": 509,
+          "precision": 1.0,
+          "recall": 0.3333,
+          "f1": 0.5,
+          "accuracy": 0.9922,
+          "fpr": 0.0
+        },
+        "RandomForest only": {
+          "tp": 6,
+          "fp": 0,
+          "fn": 0,
+          "tn": 509,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "accuracy": 1.0,
+          "fpr": 0.0
+        },
+        "IsolationForest only": {
+          "tp": 6,
+          "fp": 1,
+          "fn": 0,
+          "tn": 508,
+          "precision": 0.8571,
+          "recall": 1.0,
+          "f1": 0.9231,
+          "accuracy": 0.9981,
+          "fpr": 0.002
+        },
+        "hybrid (final)": {
+          "tp": 6,
+          "fp": 1,
+          "fn": 0,
+          "tn": 508,
+          "precision": 0.8571,
+          "recall": 1.0,
+          "f1": 0.9231,
+          "accuracy": 0.9981,
+          "fpr": 0.002
+        },
+        "hybrid, medium+ severity": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 1,
+          "tn": 509,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "f1": 0.9091,
+          "accuracy": 0.9981,
+          "fpr": 0.0
+        }
+      },
+      "verdict_counts": {
+        "portscan": 6,
+        "anomaly": 1
+      },
+      "victim_alerts": 0
+    },
+    "s3_dos": {
+      "description": "Scenario 3 - denial of service: SYN flood from a small botnet against the web server",
+      "windows": 500,
+      "malicious_windows": 18,
+      "layers": {
+        "rules only": {
+          "tp": 18,
+          "fp": 0,
+          "fn": 0,
+          "tn": 482,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "accuracy": 1.0,
+          "fpr": 0.0
+        },
+        "RandomForest only": {
+          "tp": 18,
+          "fp": 1,
+          "fn": 0,
+          "tn": 481,
+          "precision": 0.9474,
+          "recall": 1.0,
+          "f1": 0.973,
+          "accuracy": 0.998,
+          "fpr": 0.0021
+        },
+        "IsolationForest only": {
+          "tp": 18,
+          "fp": 3,
+          "fn": 0,
+          "tn": 479,
+          "precision": 0.8571,
+          "recall": 1.0,
+          "f1": 0.9231,
+          "accuracy": 0.994,
+          "fpr": 0.0062
+        },
+        "hybrid (final)": {
+          "tp": 18,
+          "fp": 3,
+          "fn": 0,
+          "tn": 479,
+          "precision": 0.8571,
+          "recall": 1.0,
+          "f1": 0.9231,
+          "accuracy": 0.994,
+          "fpr": 0.0062
+        },
+        "hybrid, medium+ severity": {
+          "tp": 18,
+          "fp": 1,
+          "fn": 0,
+          "tn": 481,
+          "precision": 0.9474,
+          "recall": 1.0,
+          "f1": 0.973,
+          "accuracy": 0.998,
+          "fpr": 0.0021
+        }
+      },
+      "verdict_counts": {
+        "dos": 18,
+        "anomaly": 2,
+        "portscan": 1
+      },
+      "victim_alerts": 3
+    },
+    "s4_bruteforce_arp": {
+      "description": "Scenario 4 - additional attacks: SSH + FTP brute force and ARP spoofing / MITM",
+      "windows": 599,
+      "malicious_windows": 12,
+      "layers": {
+        "rules only": {
+          "tp": 11,
+          "fp": 0,
+          "fn": 1,
+          "tn": 587,
+          "precision": 1.0,
+          "recall": 0.9167,
+          "f1": 0.9565,
+          "accuracy": 0.9983,
+          "fpr": 0.0
+        },
+        "RandomForest only": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "tn": 587,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "accuracy": 1.0,
+          "fpr": 0.0
+        },
+        "IsolationForest only": {
+          "tp": 6,
+          "fp": 1,
+          "fn": 6,
+          "tn": 586,
+          "precision": 0.8571,
+          "recall": 0.5,
+          "f1": 0.6316,
+          "accuracy": 0.9883,
+          "fpr": 0.0017
+        },
+        "hybrid (final)": {
+          "tp": 12,
+          "fp": 1,
+          "fn": 0,
+          "tn": 586,
+          "precision": 0.9231,
+          "recall": 1.0,
+          "f1": 0.96,
+          "accuracy": 0.9983,
+          "fpr": 0.0017
+        },
+        "hybrid, medium+ severity": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "tn": 587,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "accuracy": 1.0,
+          "fpr": 0.0
+        }
+      },
+      "verdict_counts": {
+        "bruteforce": 8,
+        "arpspoof": 4,
+        "anomaly": 1
+      },
+      "victim_alerts": 0
+    },
+    "s5_ambiguous": {
+      "description": "Scenario 5 - ambiguous: low-and-slow scan (malicious) + bursty backup job (benign)",
+      "windows": 1020,
+      "malicious_windows": 17,
+      "layers": {
+        "rules only": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 17,
+          "tn": 1003,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "accuracy": 0.9833,
+          "fpr": 0.0
+        },
+        "RandomForest only": {
+          "tp": 13,
+          "fp": 0,
+          "fn": 4,
+          "tn": 1003,
+          "precision": 1.0,
+          "recall": 0.7647,
+          "f1": 0.8667,
+          "accuracy": 0.9961,
+          "fpr": 0.0
+        },
+        "IsolationForest only": {
+          "tp": 17,
+          "fp": 4,
+          "fn": 0,
+          "tn": 999,
+          "precision": 0.8095,
+          "recall": 1.0,
+          "f1": 0.8947,
+          "accuracy": 0.9961,
+          "fpr": 0.004
+        },
+        "hybrid (final)": {
+          "tp": 17,
+          "fp": 4,
+          "fn": 0,
+          "tn": 999,
+          "precision": 0.8095,
+          "recall": 1.0,
+          "f1": 0.8947,
+          "accuracy": 0.9961,
+          "fpr": 0.004
+        },
+        "hybrid, medium+ severity": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 17,
+          "tn": 1003,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "accuracy": 0.9833,
+          "fpr": 0.0
+        }
+      },
+      "verdict_counts": {
+        "portscan": 13,
+        "anomaly": 8
+      },
+      "victim_alerts": 0
+    }
+  },
+  "overall": {
+    "rules only": {
+      "tp": 31,
+      "fp": 0,
+      "fn": 22,
+      "tn": 3147,
+      "precision": 1.0,
+      "recall": 0.5849,
+      "f1": 0.7381,
+      "accuracy": 0.9931,
+      "fpr": 0.0
+    },
+    "RandomForest only": {
+      "tp": 49,
+      "fp": 1,
+      "fn": 4,
+      "tn": 3146,
+      "precision": 0.98,
+      "recall": 0.9245,
+      "f1": 0.9515,
+      "accuracy": 0.9984,
+      "fpr": 0.0003
+    },
+    "IsolationForest only": {
+      "tp": 47,
+      "fp": 9,
+      "fn": 6,
+      "tn": 3138,
+      "precision": 0.8393,
+      "recall": 0.8868,
+      "f1": 0.8624,
+      "accuracy": 0.9953,
+      "fpr": 0.0029
+    },
+    "hybrid (final)": {
+      "tp": 53,
+      "fp": 9,
+      "fn": 0,
+      "tn": 3138,
+      "precision": 0.8548,
+      "recall": 1.0,
+      "f1": 0.9217,
+      "accuracy": 0.9972,
+      "fpr": 0.0029
+    },
+    "hybrid, medium+ severity": {
+      "tp": 35,
+      "fp": 1,
+      "fn": 18,
+      "tn": 3146,
+      "precision": 0.9722,
+      "recall": 0.6604,
+      "f1": 0.7865,
+      "accuracy": 0.9941,
+      "fpr": 0.0003
+    }
+  },
+  "class_accuracy_on_detected_malicious": 0.9245,
+  "attacks": [
+    {
+      "scenario": "s2_portscan",
+      "attack": "portscan",
+      "note": "SYN scan of 999 ports on 192.168.10.50 at ~230 probes/s",
+      "windows": 6,
+      "windows_flagged": 6,
+      "detected": true,
+      "correct_class": true,
+      "time_to_detect_s": 10.0
+    },
+    {
+      "scenario": "s2_portscan",
+      "attack": "portscan",
+      "note": "SYN scan of 60 ports on 192.168.10.12 at ~2 probes/s",
+      "windows": 6,
+      "windows_flagged": 6,
+      "detected": true,
+      "correct_class": true,
+      "time_to_detect_s": 0.5
+    },
+    {
+      "scenario": "s3_dos",
+      "attack": "dos",
+      "note": "SYN flood on 192.168.10.50:80 at ~1300 pps from 6 bots",
+      "windows": 18,
+      "windows_flagged": 18,
+      "detected": true,
+      "correct_class": true,
+      "time_to_detect_s": 10.0
+    },
+    {
+      "scenario": "s4_bruteforce_arp",
+      "attack": "bruteforce",
+      "note": "SSH brute force, 225 attempts on 192.168.10.50:22",
+      "windows": 5,
+      "windows_flagged": 5,
+      "detected": true,
+      "correct_class": true,
+      "time_to_detect_s": 10.0
+    },
+    {
+      "scenario": "s4_bruteforce_arp",
+      "attack": "bruteforce",
+      "note": "FTP brute force, 60 attempts on 192.168.10.50:21",
+      "windows": 3,
+      "windows_flagged": 3,
+      "detected": true,
+      "correct_class": true,
+      "time_to_detect_s": 10.0
+    },
+    {
+      "scenario": "s4_bruteforce_arp",
+      "attack": "arpspoof",
+      "note": "ARP poisoning of 3 victims (gateway 192.168.10.1 -> 02:00:00:00:00:63)",
+      "windows": 4,
+      "windows_flagged": 4,
+      "detected": true,
+      "correct_class": true,
+      "time_to_detect_s": 10.0
+    },
+    {
+      "scenario": "s5_ambiguous",
+      "attack": "portscan",
+      "note": "low-and-slow SYN scan, 17 ports, one probe every ~12 s",
+      "windows": 17,
+      "windows_flagged": 17,
+      "detected": true,
+      "correct_class": true,
+      "time_to_detect_s": 10.0
+    }
+  ],
+  "timing": {
+    "s1_benign": {
+      "packets": 29251,
+      "capture_seconds": 119.3,
+      "windows": 566,
+      "extract_s": 0.598,
+      "detect_s": 0.154,
+      "models_s": 0.101,
+      "total_s": 0.752,
+      "packets_per_s": 38894.0,
+      "ms_per_window": 0.272,
+      "realtime_factor": 158.6
+    },
+    "s2_portscan": {
+      "packets": 27264,
+      "capture_seconds": 119.85,
+      "windows": 515,
+      "extract_s": 0.437,
+      "detect_s": 0.938,
+      "models_s": 0.092,
+      "total_s": 1.375,
+      "packets_per_s": 19828.7,
+      "ms_per_window": 1.822,
+      "realtime_factor": 87.2
+    },
+    "s3_dos": {
+      "packets": 73449,
+      "capture_seconds": 119.92,
+      "windows": 500,
+      "extract_s": 1.433,
+      "detect_s": 2.55,
+      "models_s": 0.102,
+      "total_s": 3.983,
+      "packets_per_s": 18440.8,
+      "ms_per_window": 5.1,
+      "realtime_factor": 30.1
+    },
+    "s4_bruteforce_arp": {
+      "packets": 30293,
+      "capture_seconds": 152.84,
+      "windows": 599,
+      "extract_s": 0.465,
+      "detect_s": 1.524,
+      "models_s": 0.095,
+      "total_s": 1.989,
+      "packets_per_s": 15232.0,
+      "ms_per_window": 2.544,
+      "realtime_factor": 76.9
+    },
+    "s5_ambiguous": {
+      "packets": 47350,
+      "capture_seconds": 360.6,
+      "windows": 1020,
+      "extract_s": 0.869,
+      "detect_s": 2.584,
+      "models_s": 0.127,
+      "total_s": 3.453,
+      "packets_per_s": 13711.0,
+      "ms_per_window": 2.533,
+      "realtime_factor": 104.4
+    }
+  },
+  "dos_impact": {
+    "before_rtt_ms_median": 1.0,
+    "during_rtt_ms_median": 173.29,
+    "before_unanswered_pct": 0.0,
+    "during_unanswered_pct": 39.2
+  },
+  "examples": {
+    "TP": [
+      {
+        "scenario": "s2_portscan",
+        "src": "192.168.10.66",
+        "window_start": "10:00:30",
+        "label": "portscan",
+        "verdict": "portscan",
+        "severity": "medium",
+        "confidence": 0.99,
+        "observed": {
+          "pkts": 1004.0,
+          "n_flows": 1000.0,
+          "n_dst_ports": 999.0,
+          "syn_count": 1000.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 0.001,
+          "auth_service_conns": 4.0,
+          "max_conn_same_service": 1.0
+        },
+        "rf": "portscan p=1.00",
+        "if_score": -0.2206,
+        "why": "SCAN-001 (TCP SYN port scan (vertical)): n_dst_ports=999 >= 20 and rejected_ratio=0.996 >= 0.5 | RF: portscan p=1.00 | top features: syn_ack_ratio=1000 (benign median 0), conn_rate=100 (benign median 0), auth_service_conns=4 (benign median 0) | IsolationForest score -0.221 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s2_portscan",
+        "src": "192.168.10.66",
+        "window_start": "10:00:40",
+        "label": "portscan",
+        "verdict": "portscan",
+        "severity": "medium",
+        "confidence": 0.99,
+        "observed": {
+          "pkts": 11.0,
+          "n_flows": 11.0,
+          "n_dst_ports": 11.0,
+          "syn_count": 11.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 0.001,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 1.0
+        },
+        "rf": "portscan p=1.00",
+        "if_score": -0.188,
+        "why": "RF: portscan p=1.00 | top features: syn_ack_ratio=11 (benign median 0), syn_ratio=1 (benign median 0), rejected_ratio=1 (benign median 0) | IsolationForest score -0.188 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s2_portscan",
+        "src": "192.168.10.66",
+        "window_start": "10:00:50",
+        "label": "portscan",
+        "verdict": "portscan",
+        "severity": "medium",
+        "confidence": 0.99,
+        "observed": {
+          "pkts": 13.0,
+          "n_flows": 13.0,
+          "n_dst_ports": 13.0,
+          "syn_count": 13.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 0.001,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 1.0
+        },
+        "rf": "portscan p=1.00",
+        "if_score": -0.1888,
+        "why": "RF: portscan p=1.00 | top features: syn_ack_ratio=13 (benign median 0), syn_ratio=1 (benign median 0), rejected_ratio=1 (benign median 0) | IsolationForest score -0.189 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s3_dos",
+        "src": "203.0.113.148",
+        "window_start": "10:00:40",
+        "label": "dos",
+        "verdict": "dos",
+        "severity": "high",
+        "confidence": 0.99,
+        "observed": {
+          "pkts": 2170.0,
+          "n_flows": 2142.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 2170.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 0.68,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 2142.0
+        },
+        "rf": "dos p=1.00",
+        "if_score": -0.222,
+        "why": "DOS-001 (TCP SYN flood from source): syn_count=2170 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2142 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2170 (benign median 0), conn_rate=214.2 (benign median 0), max_conn_same_service=2142 (benign median 0) | IsolationForest score -0.222 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s3_dos",
+        "src": "203.0.113.159",
+        "window_start": "10:00:40",
+        "label": "dos",
+        "verdict": "dos",
+        "severity": "high",
+        "confidence": 0.99,
+        "observed": {
+          "pkts": 2166.0,
+          "n_flows": 2136.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 2166.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 0.806,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 2136.0
+        },
+        "rf": "dos p=1.00",
+        "if_score": -0.2204,
+        "why": "DOS-001 (TCP SYN flood from source): syn_count=2166 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2136 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2166 (benign median 0), conn_rate=213.6 (benign median 0), max_conn_same_service=2136 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s3_dos",
+        "src": "203.0.113.163",
+        "window_start": "10:00:40",
+        "label": "dos",
+        "verdict": "dos",
+        "severity": "high",
+        "confidence": 0.99,
+        "observed": {
+          "pkts": 2208.0,
+          "n_flows": 2188.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 2208.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 0.625,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 2188.0
+        },
+        "rf": "dos p=1.00",
+        "if_score": -0.222,
+        "why": "DOS-001 (TCP SYN flood from source): syn_count=2208 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2188 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2208 (benign median 0), conn_rate=218.8 (benign median 0), max_conn_same_service=2188 (benign median 0) | IsolationForest score -0.222 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s4_bruteforce_arp",
+        "src": "203.0.113.45",
+        "window_start": "10:00:20",
+        "label": "bruteforce",
+        "verdict": "bruteforce",
+        "severity": "high",
+        "confidence": 0.99,
+        "observed": {
+          "pkts": 272.0,
+          "n_flows": 39.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 39.0,
+          "handshake_completion": 1.0,
+          "mean_flow_duration": 0.31,
+          "auth_service_conns": 39.0,
+          "max_conn_same_service": 39.0
+        },
+        "rf": "bruteforce p=1.00",
+        "if_score": -0.1692,
+        "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=39 >= 10 and max_conn_same_service=39 >= 10 and mean_flow_duration=0.31 <= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=39 (benign median 0), max_conn_same_service=39 (benign median 0), conn_rate=3.9 (benign median 0) | IsolationForest score -0.169 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s4_bruteforce_arp",
+        "src": "203.0.113.45",
+        "window_start": "10:00:30",
+        "label": "bruteforce",
+        "verdict": "bruteforce",
+        "severity": "high",
+        "confidence": 0.99,
+        "observed": {
+          "pkts": 474.0,
+          "n_flows": 69.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 69.0,
+          "handshake_completion": 1.0,
+          "mean_flow_duration": 0.31,
+          "auth_service_conns": 69.0,
+          "max_conn_same_service": 69.0
+        },
+        "rf": "bruteforce p=1.00",
+        "if_score": -0.1735,
+        "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=69 >= 10 and max_conn_same_service=69 >= 10 and mean_flow_duration=0.31 <= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=69 (benign median 0), max_conn_same_service=69 (benign median 0), conn_rate=6.9 (benign median 0) | IsolationForest score -0.173 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s4_bruteforce_arp",
+        "src": "203.0.113.45",
+        "window_start": "10:00:40",
+        "label": "bruteforce",
+        "verdict": "bruteforce",
+        "severity": "high",
+        "confidence": 0.99,
+        "observed": {
+          "pkts": 434.0,
+          "n_flows": 61.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 61.0,
+          "handshake_completion": 1.0,
+          "mean_flow_duration": 0.31,
+          "auth_service_conns": 61.0,
+          "max_conn_same_service": 61.0
+        },
+        "rf": "bruteforce p=1.00",
+        "if_score": -0.1694,
+        "why": "BF-001 (Brute force on an authentication service (SSH/FTP/Telnet/RDP/SMB)): auth_service_conns=61 >= 10 and max_conn_same_service=61 >= 10 and mean_flow_duration=0.31 <= 5 | RF: bruteforce p=1.00 | top features: auth_service_conns=61 (benign median 0), max_conn_same_service=61 (benign median 0), conn_rate=6.1 (benign median 0) | IsolationForest score -0.169 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s5_ambiguous",
+        "src": "192.168.10.88",
+        "window_start": "10:00:20",
+        "label": "portscan",
+        "verdict": "anomaly",
+        "severity": "low",
+        "confidence": 0.527,
+        "observed": {
+          "pkts": 2.0,
+          "n_flows": 1.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 1.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 0.001,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 1.0
+        },
+        "rf": "benign p=0.66",
+        "if_score": -0.1744,
+        "why": "RF: benign p=0.66 | top features: syn_ack_ratio=1 (benign median 0), syn_ratio=0.5 (benign median 0), handshake_completion=0 (benign median 1) | IsolationForest score -0.174 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s5_ambiguous",
+        "src": "192.168.10.88",
+        "window_start": "10:00:30",
+        "label": "portscan",
+        "verdict": "portscan",
+        "severity": "low",
+        "confidence": 0.506,
+        "observed": {
+          "pkts": 1.0,
+          "n_flows": 1.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 1.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 0.001,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 1.0
+        },
+        "rf": "portscan p=0.51",
+        "if_score": -0.1918,
+        "why": "RF: portscan p=0.51 | top features: syn_ack_ratio=1 (benign median 0), syn_ratio=1 (benign median 0), rejected_ratio=1 (benign median 0) | IsolationForest score -0.192 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s5_ambiguous",
+        "src": "192.168.10.88",
+        "window_start": "10:00:40",
+        "label": "portscan",
+        "verdict": "anomaly",
+        "severity": "low",
+        "confidence": 0.527,
+        "observed": {
+          "pkts": 2.0,
+          "n_flows": 1.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 1.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 0.001,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 1.0
+        },
+        "rf": "benign p=0.66",
+        "if_score": -0.1744,
+        "why": "RF: benign p=0.66 | top features: syn_ack_ratio=1 (benign median 0), syn_ratio=0.5 (benign median 0), handshake_completion=0 (benign median 1) | IsolationForest score -0.174 (threshold -0.161) ANOMALOUS"
+      }
+    ],
+    "FP": [
+      {
+        "scenario": "s2_portscan",
+        "src": "192.168.10.28",
+        "window_start": "10:00:20",
+        "label": "benign",
+        "verdict": "anomaly",
+        "severity": "low",
+        "confidence": 0.529,
+        "observed": {
+          "pkts": 1.0,
+          "n_flows": 1.0,
+          "n_dst_ports": 0.0,
+          "syn_count": 0.0,
+          "handshake_completion": 1.0,
+          "mean_flow_duration": 67.924,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 0.0
+        },
+        "rf": "benign p=0.95",
+        "if_score": -0.1755,
+        "why": "RF: benign p=0.95 | top features: mean_flow_duration=67.924 (benign median 0), frac_tcp=0 (benign median 1), pkts=1 (benign median 41) | IsolationForest score -0.175 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s3_dos",
+        "src": "192.168.10.27",
+        "window_start": "10:00:00",
+        "label": "benign",
+        "verdict": "anomaly",
+        "severity": "low",
+        "confidence": 0.545,
+        "observed": {
+          "pkts": 7.0,
+          "n_flows": 1.0,
+          "n_dst_ports": 0.0,
+          "syn_count": 0.0,
+          "handshake_completion": 1.0,
+          "mean_flow_duration": 63.66,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 0.0
+        },
+        "rf": "benign p=0.91",
+        "if_score": -0.1833,
+        "why": "RF: benign p=0.91 | top features: mean_flow_duration=63.66 (benign median 0), frac_tcp=0 (benign median 1), pkt_rate=0.7 (benign median 4.1) | IsolationForest score -0.183 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s3_dos",
+        "src": "192.168.10.27",
+        "window_start": "10:01:00",
+        "label": "benign",
+        "verdict": "anomaly",
+        "severity": "low",
+        "confidence": 0.575,
+        "observed": {
+          "pkts": 12.0,
+          "n_flows": 2.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 4.0,
+          "handshake_completion": 0.5,
+          "mean_flow_duration": 1.67,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 2.0
+        },
+        "rf": "benign p=0.94",
+        "if_score": -0.1986,
+        "why": "RF: benign p=0.94 | top features: mean_flow_duration=1.67 (benign median 0), syn_ack_ratio=0.8 (benign median 0), syn_ratio=0.5 (benign median 0) | IsolationForest score -0.199 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s3_dos",
+        "src": "192.168.10.29",
+        "window_start": "10:01:00",
+        "label": "benign",
+        "verdict": "portscan",
+        "severity": "medium",
+        "confidence": 0.692,
+        "observed": {
+          "pkts": 7.0,
+          "n_flows": 2.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 6.0,
+          "handshake_completion": 0.0,
+          "mean_flow_duration": 3.0,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 2.0
+        },
+        "rf": "portscan p=0.69",
+        "if_score": -0.2237,
+        "why": "RF: portscan p=0.69 | top features: syn_ack_ratio=6 (benign median 0), mean_flow_duration=3 (benign median 0), syn_ratio=1 (benign median 0) | IsolationForest score -0.224 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s4_bruteforce_arp",
+        "src": "192.168.10.15",
+        "window_start": "10:00:20",
+        "label": "benign",
+        "verdict": "anomaly",
+        "severity": "low",
+        "confidence": 0.51,
+        "observed": {
+          "pkts": 4.0,
+          "n_flows": 1.0,
+          "n_dst_ports": 0.0,
+          "syn_count": 0.0,
+          "handshake_completion": 1.0,
+          "mean_flow_duration": 121.619,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 0.0
+        },
+        "rf": "benign p=0.96",
+        "if_score": -0.1659,
+        "why": "RF: benign p=0.96 | top features: mean_flow_duration=121.619 (benign median 0), frac_tcp=0 (benign median 1), pkt_rate=0.4 (benign median 4.1) | IsolationForest score -0.166 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s5_ambiguous",
+        "src": "192.168.10.40",
+        "window_start": "10:03:20",
+        "label": "benign",
+        "verdict": "anomaly",
+        "severity": "low",
+        "confidence": 0.516,
+        "observed": {
+          "pkts": 685.0,
+          "n_flows": 121.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 121.0,
+          "handshake_completion": 1.0,
+          "mean_flow_duration": 0.008,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 121.0
+        },
+        "rf": "benign p=0.55",
+        "if_score": -0.1691,
+        "why": "RF: benign p=0.55 | top features: max_conn_same_service=121 (benign median 0), conn_rate=12.1 (benign median 0), syn_ack_ratio=0.214 (benign median 0) | IsolationForest score -0.169 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s5_ambiguous",
+        "src": "192.168.10.40",
+        "window_start": "10:03:30",
+        "label": "benign",
+        "verdict": "anomaly",
+        "severity": "low",
+        "confidence": 0.516,
+        "observed": {
+          "pkts": 875.0,
+          "n_flows": 156.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 156.0,
+          "handshake_completion": 1.0,
+          "mean_flow_duration": 0.008,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 156.0
+        },
+        "rf": "benign p=0.55",
+        "if_score": -0.1691,
+        "why": "RF: benign p=0.55 | top features: conn_rate=15.6 (benign median 0), max_conn_same_service=156 (benign median 0), syn_ack_ratio=0.217 (benign median 0) | IsolationForest score -0.169 (threshold -0.161) ANOMALOUS"
+      },
+      {
+        "scenario": "s5_ambiguous",
+        "src": "192.168.10.40",
+        "window_start": "10:03:40",
+        "label": "benign",
+        "verdict": "anomaly",
+        "severity": "low",
+        "confidence": 0.513,
+        "observed": {
+          "pkts": 659.0,
+          "n_flows": 114.0,
+          "n_dst_ports": 1.0,
+          "syn_count": 114.0,
+          "handshake_completion": 1.0,
+          "mean_flow_duration": 0.008,
+          "auth_service_conns": 0.0,
+          "max_conn_same_service": 114.0
+        },
+        "rf": "benign p=0.55",
+        "if_score": -0.1675,
+        "why": "RF: benign p=0.55 | top features: max_conn_same_service=114 (benign median 0), conn_rate=11.4 (benign median 0), syn_ack_ratio=0.209 (benign median 0) | IsolationForest score -0.167 (threshold -0.161) ANOMALOUS"
+      }
+    ],
+    "FN": [],
+    "FN at medium+ severity": [
+      {
+        "scenario": "s2_portscan",
+        "src": "192.168.10.66",
+        "label": "portscan",
+        "window_start": "10:01:20",
+        "verdict": "portscan",
+        "severity": "low",
+        "rf": "portscan p=0.51",
+        "if_score": -0.1865,
+        "rules": "none"
+      },
+      {
+        "scenario": "s5_ambiguous",
+        "src": "192.168.10.88",
+        "label": "portscan",
+        "window_start": "10:00:20",
+        "verdict": "anomaly",
+        "severity": "low",
+        "rf": "benign p=0.66",
+        "if_score": -0.1744,
+        "rules": "none"
+      },
+      {
+        "scenario": "s5_ambiguous",
+        "src": "192.168.10.88",
+        "label": "portscan",
+        "window_start": "10:00:30",
+        "verdict": "portscan",
+        "severity": "low",
+        "rf": "portscan p=0.51",
+        "if_score": -0.1918,
+        "rules": "none"
+      },
+      {
+        "scenario": "s5_ambiguous",
+        "src": "192.168.10.88",
+        "label": "portscan",
+        "window_start": "10:00:40",
+        "verdict": "anomaly",
+        "severity": "low",
+        "rf": "benign p=0.66",
+        "if_score": -0.1744,
+        "rules": "none"
+      }
+    ]
+  },
+  "if_threshold": -0.16101661170206683
+}

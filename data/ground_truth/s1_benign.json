@@ -1,0 +1,9 @@
+{
+  "scenario": "s1_benign",
+  "description": "Scenario 1 - normal traffic baseline (DNS, HTTP, TLS, ICMP, SSH admin session, ARP)",
+  "seed": 42,
+  "variant": "test",
+  "base_ts": 1793181600.0,
+  "n_packets": 29251,
+  "attacks": []
+}

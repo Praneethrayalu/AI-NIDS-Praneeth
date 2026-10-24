@@ -1,0 +1,547 @@
+{
+  "timing": {
+    "packets": 27264,
+    "capture_seconds": 119.85,
+    "windows": 515,
+    "extract_s": 0.437,
+    "detect_s": 0.938,
+    "models_s": 0.092,
+    "total_s": 1.375,
+    "packets_per_s": 19828.7,
+    "ms_per_window": 1.822,
+    "realtime_factor": 87.2
+  },
+  "events": [
+    {
+      "verdict": "anomaly",
+      "severity": "low",
+      "confidence": 0.529,
+      "layers": "iforest",
+      "rule_ids": "",
+      "why": "RF: benign p=0.95 | top features: mean_flow_duration=67.924 (benign median 0), frac_tcp=0 (benign median 1), pkts=1 (benign median 41) | IsolationForest score -0.175 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "benign",
+          "confidence": 0.945,
+          "proba": {
+            "benign": 0.945,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 0.055,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "mean_flow_duration",
+            "observed": 67.924,
+            "benign_median": 0.0,
+            "deviation_iqr": 81.98,
+            "importance": 0.049,
+            "contribution": 4.008
+          },
+          {
+            "feature": "frac_tcp",
+            "observed": 0.0,
+            "benign_median": 1.0,
+            "deviation_iqr": -21.83,
+            "importance": 0.009,
+            "contribution": 0.202
+          },
+          {
+            "feature": "pkts",
+            "observed": 1.0,
+            "benign_median": 41.0,
+            "deviation_iqr": -2.92,
+            "importance": 0.018,
+            "contribution": 0.051
+          }
+        ],
+        "iforest": {
+          "score": -0.1755,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0001",
+      "src": "192.168.10.28",
+      "window_start": "2026-10-28 10:00:20",
+      "window_end": "2026-10-28 10:00:30",
+      "dsts": "192.168.10.1",
+      "dst_ports": "",
+      "observed": {
+        "pkts": 1.0,
+        "pkt_rate": 0.1,
+        "n_flows": 1.0,
+        "n_dst_ports": 0.0,
+        "syn_count": 0.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "portscan",
+      "severity": "medium",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "SCAN-001",
+      "why": "SCAN-001 (TCP SYN port scan (vertical)): n_dst_ports=999 >= 20 and rejected_ratio=0.996 >= 0.5 | RF: portscan p=1.00 | top features: syn_ack_ratio=1000 (benign median 0), conn_rate=100 (benign median 0), auth_service_conns=4 (benign median 0) | IsolationForest score -0.221 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "SCAN-001",
+            "name": "TCP SYN port scan (vertical)",
+            "label": "portscan",
+            "severity": "medium",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "n_dst_ports",
+                "op": ">=",
+                "threshold": 20,
+                "observed": 999.0
+              },
+              {
+                "feature": "rejected_ratio",
+                "op": ">=",
+                "threshold": 0.5,
+                "observed": 0.996
+              }
+            ],
+            "snort": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"SCAN-001 SYN port scan\"; flags:S; detection_filter:track by_src, count 20, seconds 10; sid:1000001;)"
+          }
+        ],
+        "rf": {
+          "class": "portscan",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 1.0,
+            "dos": 0.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 1000.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 110.5,
+            "importance": 0.097,
+            "contribution": 10.716
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 100.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 17.59,
+            "importance": 0.044,
+            "contribution": 0.777
+          },
+          {
+            "feature": "auth_service_conns",
+            "observed": 4.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 12.41,
+            "importance": 0.051,
+            "contribution": 0.638
+          }
+        ],
+        "iforest": {
+          "score": -0.2206,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0002",
+      "src": "192.168.10.66",
+      "window_start": "2026-10-28 10:00:30",
+      "window_end": "2026-10-28 10:00:40",
+      "dsts": "192.168.10.50,192.168.10.12",
+      "dst_ports": "635,863,924,449,438",
+      "observed": {
+        "pkts": 1004.0,
+        "pkt_rate": 100.4,
+        "n_flows": 1000.0,
+        "n_dst_ports": 999.0,
+        "syn_count": 1000.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "portscan",
+      "severity": "medium",
+      "confidence": 0.99,
+      "layers": "rf+iforest",
+      "rule_ids": "",
+      "why": "RF: portscan p=1.00 | top features: syn_ack_ratio=11 (benign median 0), syn_ratio=1 (benign median 0), rejected_ratio=1 (benign median 0) | IsolationForest score -0.188 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "portscan",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 1.0,
+            "dos": 0.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 11.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 39.75,
+            "importance": 0.097,
+            "contribution": 3.854
+          },
+          {
+            "feature": "syn_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.57,
+            "importance": 0.052,
+            "contribution": 0.597
+          },
+          {
+            "feature": "rejected_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 5.72,
+            "importance": 0.054,
+            "contribution": 0.307
+          }
+        ],
+        "iforest": {
+          "score": -0.188,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0003",
+      "src": "192.168.10.66",
+      "window_start": "2026-10-28 10:00:40",
+      "window_end": "2026-10-28 10:00:50",
+      "dsts": "192.168.10.12",
+      "dst_ports": "451,38,255,265,833",
+      "observed": {
+        "pkts": 11.0,
+        "pkt_rate": 1.1,
+        "n_flows": 11.0,
+        "n_dst_ports": 11.0,
+        "syn_count": 11.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "portscan",
+      "severity": "medium",
+      "confidence": 0.99,
+      "layers": "rf+iforest",
+      "rule_ids": "",
+      "why": "RF: portscan p=1.00 | top features: syn_ack_ratio=13 (benign median 0), syn_ratio=1 (benign median 0), rejected_ratio=1 (benign median 0) | IsolationForest score -0.189 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "portscan",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 1.0,
+            "dos": 0.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 13.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 42.21,
+            "importance": 0.097,
+            "contribution": 4.093
+          },
+          {
+            "feature": "syn_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.57,
+            "importance": 0.052,
+            "contribution": 0.597
+          },
+          {
+            "feature": "rejected_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 5.72,
+            "importance": 0.054,
+            "contribution": 0.307
+          }
+        ],
+        "iforest": {
+          "score": -0.1888,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0004",
+      "src": "192.168.10.66",
+      "window_start": "2026-10-28 10:00:50",
+      "window_end": "2026-10-28 10:01:00",
+      "dsts": "192.168.10.12",
+      "dst_ports": "761,784,685,702,552",
+      "observed": {
+        "pkts": 13.0,
+        "pkt_rate": 1.3,
+        "n_flows": 13.0,
+        "n_dst_ports": 13.0,
+        "syn_count": 13.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "portscan",
+      "severity": "medium",
+      "confidence": 0.99,
+      "layers": "rf+iforest",
+      "rule_ids": "",
+      "why": "RF: portscan p=1.00 | top features: syn_ack_ratio=12 (benign median 0), syn_ratio=1 (benign median 0), rejected_ratio=1 (benign median 0) | IsolationForest score -0.186 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "portscan",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 1.0,
+            "dos": 0.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 12.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 41.03,
+            "importance": 0.097,
+            "contribution": 3.978
+          },
+          {
+            "feature": "syn_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.57,
+            "importance": 0.052,
+            "contribution": 0.597
+          },
+          {
+            "feature": "rejected_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 5.72,
+            "importance": 0.054,
+            "contribution": 0.307
+          }
+        ],
+        "iforest": {
+          "score": -0.1863,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0005",
+      "src": "192.168.10.66",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.12",
+      "dst_ports": "212,52,75,343,842",
+      "observed": {
+        "pkts": 12.0,
+        "pkt_rate": 1.2,
+        "n_flows": 12.0,
+        "n_dst_ports": 12.0,
+        "syn_count": 12.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "portscan",
+      "severity": "medium",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "SCAN-001",
+      "why": "SCAN-001 (TCP SYN port scan (vertical)): n_dst_ports=21 >= 20 and rejected_ratio=1 >= 0.5 | RF: portscan p=1.00 | top features: syn_ack_ratio=21 (benign median 0), syn_ratio=1 (benign median 0), rejected_ratio=1 (benign median 0) | IsolationForest score -0.195 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "SCAN-001",
+            "name": "TCP SYN port scan (vertical)",
+            "label": "portscan",
+            "severity": "medium",
+            "confidence": 0.707,
+            "checks": [
+              {
+                "feature": "n_dst_ports",
+                "op": ">=",
+                "threshold": 20,
+                "observed": 21.0
+              },
+              {
+                "feature": "rejected_ratio",
+                "op": ">=",
+                "threshold": 0.5,
+                "observed": 1.0
+              }
+            ],
+            "snort": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"SCAN-001 SYN port scan\"; flags:S; detection_filter:track by_src, count 20, seconds 10; sid:1000001;)"
+          }
+        ],
+        "rf": {
+          "class": "portscan",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 1.0,
+            "dos": 0.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 21.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 49.44,
+            "importance": 0.097,
+            "contribution": 4.794
+          },
+          {
+            "feature": "syn_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.57,
+            "importance": 0.052,
+            "contribution": 0.597
+          },
+          {
+            "feature": "rejected_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 5.72,
+            "importance": 0.054,
+            "contribution": 0.307
+          }
+        ],
+        "iforest": {
+          "score": -0.1948,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0006",
+      "src": "192.168.10.66",
+      "window_start": "2026-10-28 10:01:10",
+      "window_end": "2026-10-28 10:01:20",
+      "dsts": "192.168.10.12",
+      "dst_ports": "365,864,54,407,632",
+      "observed": {
+        "pkts": 21.0,
+        "pkt_rate": 2.1,
+        "n_flows": 21.0,
+        "n_dst_ports": 21.0,
+        "syn_count": 21.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "portscan",
+      "severity": "low",
+      "confidence": 0.513,
+      "layers": "rf+iforest",
+      "rule_ids": "",
+      "why": "RF: portscan p=0.51 | top features: syn_ack_ratio=2 (benign median 0), syn_ratio=1 (benign median 0), rejected_ratio=1 (benign median 0) | IsolationForest score -0.187 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "portscan",
+          "confidence": 0.513,
+          "proba": {
+            "benign": 0.41,
+            "portscan": 0.513,
+            "dos": 0.026,
+            "bruteforce": 0.051,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 17.57,
+            "importance": 0.097,
+            "contribution": 1.704
+          },
+          {
+            "feature": "syn_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.57,
+            "importance": 0.052,
+            "contribution": 0.597
+          },
+          {
+            "feature": "rejected_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 5.72,
+            "importance": 0.054,
+            "contribution": 0.307
+          }
+        ],
+        "iforest": {
+          "score": -0.1865,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0007",
+      "src": "192.168.10.66",
+      "window_start": "2026-10-28 10:01:20",
+      "window_end": "2026-10-28 10:01:30",
+      "dsts": "192.168.10.12",
+      "dst_ports": "707,539",
+      "observed": {
+        "pkts": 2.0,
+        "pkt_rate": 0.2,
+        "n_flows": 2.0,
+        "n_dst_ports": 2.0,
+        "syn_count": 2.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    }
+  ],
+  "victim_alerts": [],
+  "arp_events": []
+}

@@ -1,0 +1,24 @@
+{
+  "scenario": "s3_dos",
+  "description": "Scenario 3 - denial of service: SYN flood from a small botnet against the web server",
+  "seed": 42,
+  "variant": "test",
+  "base_ts": 1793181600.0,
+  "n_packets": 73449,
+  "attacks": [
+    {
+      "label": "dos",
+      "srcs": [
+        "203.0.113.148",
+        "203.0.113.159",
+        "203.0.113.163",
+        "203.0.113.180",
+        "203.0.113.183",
+        "203.0.113.198"
+      ],
+      "start": 1793181640.0,
+      "end": 1793181670.0,
+      "note": "SYN flood on 192.168.10.50:80 at ~1300 pps from 6 bots"
+    }
+  ]
+}

@@ -1,0 +1,2029 @@
+{
+  "timing": {
+    "packets": 73449,
+    "capture_seconds": 119.92,
+    "windows": 500,
+    "extract_s": 1.433,
+    "detect_s": 2.55,
+    "models_s": 0.102,
+    "total_s": 3.983,
+    "packets_per_s": 18440.8,
+    "ms_per_window": 5.1,
+    "realtime_factor": 30.1
+  },
+  "events": [
+    {
+      "verdict": "anomaly",
+      "severity": "low",
+      "confidence": 0.545,
+      "layers": "iforest",
+      "rule_ids": "",
+      "why": "RF: benign p=0.91 | top features: mean_flow_duration=63.66 (benign median 0), frac_tcp=0 (benign median 1), pkt_rate=0.7 (benign median 4.1) | IsolationForest score -0.183 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "benign",
+          "confidence": 0.906,
+          "proba": {
+            "benign": 0.906,
+            "portscan": 0.0,
+            "dos": 0.0,
+            "bruteforce": 0.094,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "mean_flow_duration",
+            "observed": 63.66,
+            "benign_median": 0.0,
+            "deviation_iqr": 80.75,
+            "importance": 0.049,
+            "contribution": 3.948
+          },
+          {
+            "feature": "frac_tcp",
+            "observed": 0.0,
+            "benign_median": 1.0,
+            "deviation_iqr": -21.83,
+            "importance": 0.009,
+            "contribution": 0.202
+          },
+          {
+            "feature": "pkt_rate",
+            "observed": 0.7,
+            "benign_median": 4.1,
+            "deviation_iqr": -1.3,
+            "importance": 0.027,
+            "contribution": 0.035
+          }
+        ],
+        "iforest": {
+          "score": -0.1833,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0001",
+      "src": "192.168.10.27",
+      "window_start": "2026-10-28 10:00:00",
+      "window_end": "2026-10-28 10:00:10",
+      "dsts": "192.168.10.1",
+      "dst_ports": "",
+      "observed": {
+        "pkts": 7.0,
+        "pkt_rate": 0.7,
+        "n_flows": 1.0,
+        "n_dst_ports": 0.0,
+        "syn_count": 0.0,
+        "handshake_completion": 1.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2170 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2142 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2170 (benign median 0), conn_rate=214.2 (benign median 0), max_conn_same_service=2142 (benign median 0) | IsolationForest score -0.222 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2170.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2142.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2170.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.89,
+            "importance": 0.097,
+            "contribution": 11.916
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 214.2,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.47,
+            "importance": 0.044,
+            "contribution": 0.904
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2142.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.07,
+            "importance": 0.063,
+            "contribution": 0.693
+          }
+        ],
+        "iforest": {
+          "score": -0.222,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0002",
+      "src": "203.0.113.148",
+      "window_start": "2026-10-28 10:00:40",
+      "window_end": "2026-10-28 10:00:50",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2170.0,
+        "pkt_rate": 217.0,
+        "n_flows": 2142.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2170.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2166 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2136 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2166 (benign median 0), conn_rate=213.6 (benign median 0), max_conn_same_service=2136 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2166.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2136.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2166.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.86,
+            "importance": 0.097,
+            "contribution": 11.914
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 213.6,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.46,
+            "importance": 0.044,
+            "contribution": 0.903
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2136.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.06,
+            "importance": 0.063,
+            "contribution": 0.693
+          }
+        ],
+        "iforest": {
+          "score": -0.2204,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0003",
+      "src": "203.0.113.159",
+      "window_start": "2026-10-28 10:00:40",
+      "window_end": "2026-10-28 10:00:50",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2166.0,
+        "pkt_rate": 216.6,
+        "n_flows": 2136.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2166.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2208 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2188 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2208 (benign median 0), conn_rate=218.8 (benign median 0), max_conn_same_service=2188 (benign median 0) | IsolationForest score -0.222 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2208.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2188.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2208.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 123.16,
+            "importance": 0.097,
+            "contribution": 11.943
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 218.8,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.55,
+            "importance": 0.044,
+            "contribution": 0.907
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2188.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.1,
+            "importance": 0.063,
+            "contribution": 0.695
+          }
+        ],
+        "iforest": {
+          "score": -0.222,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0004",
+      "src": "203.0.113.163",
+      "window_start": "2026-10-28 10:00:40",
+      "window_end": "2026-10-28 10:00:50",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2208.0,
+        "pkt_rate": 220.8,
+        "n_flows": 2188.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2208.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2181 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2160 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2181 (benign median 0), conn_rate=216 (benign median 0), max_conn_same_service=2160 (benign median 0) | IsolationForest score -0.222 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2181.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2160.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2181.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.97,
+            "importance": 0.097,
+            "contribution": 11.924
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 216.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.51,
+            "importance": 0.044,
+            "contribution": 0.905
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2160.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.08,
+            "importance": 0.063,
+            "contribution": 0.694
+          }
+        ],
+        "iforest": {
+          "score": -0.222,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0005",
+      "src": "203.0.113.180",
+      "window_start": "2026-10-28 10:00:40",
+      "window_end": "2026-10-28 10:00:50",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2181.0,
+        "pkt_rate": 218.1,
+        "n_flows": 2160.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2181.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2174 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2145 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2174 (benign median 0), conn_rate=214.5 (benign median 0), max_conn_same_service=2145 (benign median 0) | IsolationForest score -0.222 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2174.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2145.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2174.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.92,
+            "importance": 0.097,
+            "contribution": 11.919
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 214.5,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.48,
+            "importance": 0.044,
+            "contribution": 0.904
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2145.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.07,
+            "importance": 0.063,
+            "contribution": 0.693
+          }
+        ],
+        "iforest": {
+          "score": -0.222,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0006",
+      "src": "203.0.113.183",
+      "window_start": "2026-10-28 10:00:40",
+      "window_end": "2026-10-28 10:00:50",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2174.0,
+        "pkt_rate": 217.4,
+        "n_flows": 2145.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2174.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2182 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2151 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2182 (benign median 0), conn_rate=215.1 (benign median 0), max_conn_same_service=2151 (benign median 0) | IsolationForest score -0.221 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2182.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2151.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2182.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.98,
+            "importance": 0.097,
+            "contribution": 11.925
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 215.1,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.49,
+            "importance": 0.044,
+            "contribution": 0.905
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2151.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.07,
+            "importance": 0.063,
+            "contribution": 0.693
+          }
+        ],
+        "iforest": {
+          "score": -0.2207,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0007",
+      "src": "203.0.113.198",
+      "window_start": "2026-10-28 10:00:40",
+      "window_end": "2026-10-28 10:00:50",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2182.0,
+        "pkt_rate": 218.2,
+        "n_flows": 2151.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2182.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2207 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2138 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2207 (benign median 0), conn_rate=213.8 (benign median 0), max_conn_same_service=2138 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2207.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2138.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2207.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 123.16,
+            "importance": 0.097,
+            "contribution": 11.943
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 213.8,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.47,
+            "importance": 0.044,
+            "contribution": 0.904
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2138.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.06,
+            "importance": 0.063,
+            "contribution": 0.693
+          }
+        ],
+        "iforest": {
+          "score": -0.2202,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0008",
+      "src": "203.0.113.148",
+      "window_start": "2026-10-28 10:00:50",
+      "window_end": "2026-10-28 10:01:00",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2207.0,
+        "pkt_rate": 220.7,
+        "n_flows": 2138.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2207.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2230 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2140 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2230 (benign median 0), conn_rate=214 (benign median 0), max_conn_same_service=2140 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2230.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2140.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2230.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 123.32,
+            "importance": 0.097,
+            "contribution": 11.959
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 214.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.47,
+            "importance": 0.044,
+            "contribution": 0.904
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2140.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.06,
+            "importance": 0.063,
+            "contribution": 0.693
+          }
+        ],
+        "iforest": {
+          "score": -0.2202,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0009",
+      "src": "203.0.113.159",
+      "window_start": "2026-10-28 10:00:50",
+      "window_end": "2026-10-28 10:01:00",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2230.0,
+        "pkt_rate": 223.0,
+        "n_flows": 2140.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2230.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2122 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2044 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2122 (benign median 0), conn_rate=204.4 (benign median 0), max_conn_same_service=2044 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2122.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2044.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2122.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.53,
+            "importance": 0.097,
+            "contribution": 11.882
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 204.4,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.3,
+            "importance": 0.044,
+            "contribution": 0.896
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2044.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.0,
+            "importance": 0.063,
+            "contribution": 0.689
+          }
+        ],
+        "iforest": {
+          "score": -0.2199,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0010",
+      "src": "203.0.113.163",
+      "window_start": "2026-10-28 10:00:50",
+      "window_end": "2026-10-28 10:01:00",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2122.0,
+        "pkt_rate": 212.2,
+        "n_flows": 2044.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2122.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2198 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2114 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2198 (benign median 0), conn_rate=211.4 (benign median 0), max_conn_same_service=2114 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2198.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2114.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2198.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 123.09,
+            "importance": 0.097,
+            "contribution": 11.936
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 211.4,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.42,
+            "importance": 0.044,
+            "contribution": 0.902
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2114.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.05,
+            "importance": 0.063,
+            "contribution": 0.692
+          }
+        ],
+        "iforest": {
+          "score": -0.2202,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0011",
+      "src": "203.0.113.180",
+      "window_start": "2026-10-28 10:00:50",
+      "window_end": "2026-10-28 10:01:00",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2198.0,
+        "pkt_rate": 219.8,
+        "n_flows": 2114.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2198.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2219 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2152 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2219 (benign median 0), conn_rate=215.2 (benign median 0), max_conn_same_service=2152 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2219.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2152.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2219.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 123.24,
+            "importance": 0.097,
+            "contribution": 11.951
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 215.2,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.49,
+            "importance": 0.044,
+            "contribution": 0.905
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2152.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.07,
+            "importance": 0.063,
+            "contribution": 0.693
+          }
+        ],
+        "iforest": {
+          "score": -0.2202,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0012",
+      "src": "203.0.113.183",
+      "window_start": "2026-10-28 10:00:50",
+      "window_end": "2026-10-28 10:01:00",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2219.0,
+        "pkt_rate": 221.9,
+        "n_flows": 2152.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2219.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2163 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2077 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2163 (benign median 0), conn_rate=207.7 (benign median 0), max_conn_same_service=2077 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2163.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2077.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2163.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.84,
+            "importance": 0.097,
+            "contribution": 11.911
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 207.7,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.36,
+            "importance": 0.044,
+            "contribution": 0.899
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2077.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.02,
+            "importance": 0.063,
+            "contribution": 0.69
+          }
+        ],
+        "iforest": {
+          "score": -0.2202,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0013",
+      "src": "203.0.113.198",
+      "window_start": "2026-10-28 10:00:50",
+      "window_end": "2026-10-28 10:01:00",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2163.0,
+        "pkt_rate": 216.3,
+        "n_flows": 2077.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2163.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "anomaly",
+      "severity": "low",
+      "confidence": 0.575,
+      "layers": "iforest",
+      "rule_ids": "",
+      "why": "RF: benign p=0.94 | top features: mean_flow_duration=1.67 (benign median 0), syn_ack_ratio=0.8 (benign median 0), syn_ratio=0.5 (benign median 0) | IsolationForest score -0.199 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "benign",
+          "confidence": 0.942,
+          "proba": {
+            "benign": 0.942,
+            "portscan": 0.02,
+            "dos": 0.007,
+            "bruteforce": 0.032,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "mean_flow_duration",
+            "observed": 1.67,
+            "benign_median": 0.0,
+            "deviation_iqr": 19.02,
+            "importance": 0.049,
+            "contribution": 0.93
+          },
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 0.8,
+            "benign_median": 0.0,
+            "deviation_iqr": 9.4,
+            "importance": 0.097,
+            "contribution": 0.912
+          },
+          {
+            "feature": "syn_ratio",
+            "observed": 0.5,
+            "benign_median": 0.0,
+            "deviation_iqr": 6.77,
+            "importance": 0.052,
+            "contribution": 0.349
+          }
+        ],
+        "iforest": {
+          "score": -0.1986,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0014",
+      "src": "192.168.10.27",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 12.0,
+        "pkt_rate": 1.2,
+        "n_flows": 2.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 4.0,
+        "handshake_completion": 0.5,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "portscan",
+      "severity": "medium",
+      "confidence": 0.692,
+      "layers": "rf+iforest",
+      "rule_ids": "",
+      "why": "RF: portscan p=0.69 | top features: syn_ack_ratio=6 (benign median 0), mean_flow_duration=3 (benign median 0), syn_ratio=1 (benign median 0) | IsolationForest score -0.224 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [],
+        "rf": {
+          "class": "portscan",
+          "confidence": 0.692,
+          "proba": {
+            "benign": 0.229,
+            "portscan": 0.692,
+            "dos": 0.053,
+            "bruteforce": 0.026,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 6.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 31.12,
+            "importance": 0.097,
+            "contribution": 3.018
+          },
+          {
+            "feature": "mean_flow_duration",
+            "observed": 3.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 26.85,
+            "importance": 0.049,
+            "contribution": 1.313
+          },
+          {
+            "feature": "syn_ratio",
+            "observed": 1.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.57,
+            "importance": 0.052,
+            "contribution": 0.597
+          }
+        ],
+        "iforest": {
+          "score": -0.2237,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0015",
+      "src": "192.168.10.29",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 7.0,
+        "pkt_rate": 0.7,
+        "n_flows": 2.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 6.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2206 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2074 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2206 (benign median 0), conn_rate=207.4 (benign median 0), max_conn_same_service=2074 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2206.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2074.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2206.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 123.15,
+            "importance": 0.097,
+            "contribution": 11.942
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 207.4,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.35,
+            "importance": 0.044,
+            "contribution": 0.899
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2074.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.02,
+            "importance": 0.063,
+            "contribution": 0.69
+          }
+        ],
+        "iforest": {
+          "score": -0.2202,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0016",
+      "src": "203.0.113.148",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2206.0,
+        "pkt_rate": 220.6,
+        "n_flows": 2074.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2206.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2157 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2028 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2157 (benign median 0), conn_rate=202.8 (benign median 0), max_conn_same_service=2028 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2157.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2028.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2157.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.79,
+            "importance": 0.097,
+            "contribution": 11.907
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 202.8,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.27,
+            "importance": 0.044,
+            "contribution": 0.895
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2028.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 10.99,
+            "importance": 0.063,
+            "contribution": 0.688
+          }
+        ],
+        "iforest": {
+          "score": -0.2204,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0017",
+      "src": "203.0.113.159",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2157.0,
+        "pkt_rate": 215.7,
+        "n_flows": 2028.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2157.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2206 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2070 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2206 (benign median 0), conn_rate=207 (benign median 0), max_conn_same_service=2070 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2206.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2070.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2206.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 123.15,
+            "importance": 0.097,
+            "contribution": 11.942
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 207.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.34,
+            "importance": 0.044,
+            "contribution": 0.898
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2070.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.02,
+            "importance": 0.063,
+            "contribution": 0.69
+          }
+        ],
+        "iforest": {
+          "score": -0.2202,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0018",
+      "src": "203.0.113.163",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2206.0,
+        "pkt_rate": 220.6,
+        "n_flows": 2070.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2206.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2182 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2071 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2182 (benign median 0), conn_rate=207.1 (benign median 0), max_conn_same_service=2071 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2182.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2071.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2182.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.98,
+            "importance": 0.097,
+            "contribution": 11.925
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 207.1,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.35,
+            "importance": 0.044,
+            "contribution": 0.898
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2071.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 11.02,
+            "importance": 0.063,
+            "contribution": 0.69
+          }
+        ],
+        "iforest": {
+          "score": -0.2199,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0019",
+      "src": "203.0.113.180",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2182.0,
+        "pkt_rate": 218.2,
+        "n_flows": 2071.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2182.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2046 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=1924 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2046 (benign median 0), conn_rate=192.4 (benign median 0), max_conn_same_service=1924 (benign median 0) | IsolationForest score -0.221 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2046.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 1924.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2046.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 121.95,
+            "importance": 0.097,
+            "contribution": 11.825
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 192.4,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.07,
+            "importance": 0.044,
+            "contribution": 0.886
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 1924.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 10.91,
+            "importance": 0.063,
+            "contribution": 0.683
+          }
+        ],
+        "iforest": {
+          "score": -0.2209,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0020",
+      "src": "203.0.113.183",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2046.0,
+        "pkt_rate": 204.6,
+        "n_flows": 1924.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2046.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    },
+    {
+      "verdict": "dos",
+      "severity": "high",
+      "confidence": 0.99,
+      "layers": "rules+rf+iforest",
+      "rule_ids": "DOS-001",
+      "why": "DOS-001 (TCP SYN flood from source): syn_count=2180 >= 100 and handshake_completion=0 <= 0.2 and max_conn_same_service=2036 >= 50 | RF: dos p=1.00 | top features: syn_ack_ratio=2180 (benign median 0), conn_rate=203.6 (benign median 0), max_conn_same_service=2036 (benign median 0) | IsolationForest score -0.220 (threshold -0.161) ANOMALOUS",
+      "details": {
+        "rules": [
+          {
+            "rule_id": "DOS-001",
+            "name": "TCP SYN flood from source",
+            "label": "dos",
+            "severity": "high",
+            "confidence": 0.99,
+            "checks": [
+              {
+                "feature": "syn_count",
+                "op": ">=",
+                "threshold": 100,
+                "observed": 2180.0
+              },
+              {
+                "feature": "handshake_completion",
+                "op": "<=",
+                "threshold": 0.2,
+                "observed": 0.0
+              },
+              {
+                "feature": "max_conn_same_service",
+                "op": ">=",
+                "threshold": 50,
+                "observed": 2036.0
+              }
+            ],
+            "snort": "alert tcp any any -> $HOME_NET any (msg:\"DOS-001 SYN flood\"; flags:S; flow:stateless; detection_filter:track by_src, count 100, seconds 10; sid:1000003;)"
+          }
+        ],
+        "rf": {
+          "class": "dos",
+          "confidence": 1.0,
+          "proba": {
+            "benign": 0.0,
+            "portscan": 0.0,
+            "dos": 1.0,
+            "bruteforce": 0.0,
+            "arpspoof": 0.0
+          }
+        },
+        "top_features": [
+          {
+            "feature": "syn_ack_ratio",
+            "observed": 2180.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 122.96,
+            "importance": 0.097,
+            "contribution": 11.924
+          },
+          {
+            "feature": "conn_rate",
+            "observed": 203.6,
+            "benign_median": 0.0,
+            "deviation_iqr": 20.28,
+            "importance": 0.044,
+            "contribution": 0.895
+          },
+          {
+            "feature": "max_conn_same_service",
+            "observed": 2036.0,
+            "benign_median": 0.0,
+            "deviation_iqr": 10.99,
+            "importance": 0.063,
+            "contribution": 0.688
+          }
+        ],
+        "iforest": {
+          "score": -0.2202,
+          "threshold": -0.161,
+          "anomalous": true
+        }
+      },
+      "event_id": "EVT-0021",
+      "src": "203.0.113.198",
+      "window_start": "2026-10-28 10:01:00",
+      "window_end": "2026-10-28 10:01:10",
+      "dsts": "192.168.10.50",
+      "dst_ports": "80",
+      "observed": {
+        "pkts": 2180.0,
+        "pkt_rate": 218.0,
+        "n_flows": 2036.0,
+        "n_dst_ports": 1.0,
+        "syn_count": 2180.0,
+        "handshake_completion": 0.0,
+        "auth_failures": 0.0,
+        "arp_ip_mac_changes": 0.0
+      }
+    }
+  ],
+  "victim_alerts": [
+    {
+      "rule_id": "DOS-002",
+      "name": "SYN flood against one service (victim view)",
+      "label": "dos",
+      "severity": "high",
+      "target": "192.168.10.50:80",
+      "window_start": 1793181640.0,
+      "syn_in": 13107,
+      "completion": 0.001,
+      "n_srcs": 16,
+      "why": "13107 SYNs in 10 s >= 300 and handshake completion 0.00 <= 0.2 from 16 sources",
+      "window_start_iso": "2026-10-28 10:00:40"
+    },
+    {
+      "rule_id": "DOS-002",
+      "name": "SYN flood against one service (victim view)",
+      "label": "dos",
+      "severity": "high",
+      "target": "192.168.10.50:80",
+      "window_start": 1793181650.0,
+      "syn_in": 13167,
+      "completion": 0.001,
+      "n_srcs": 15,
+      "why": "13167 SYNs in 10 s >= 300 and handshake completion 0.00 <= 0.2 from 15 sources",
+      "window_start_iso": "2026-10-28 10:00:50"
+    },
+    {
+      "rule_id": "DOS-002",
+      "name": "SYN flood against one service (victim view)",
+      "label": "dos",
+      "severity": "high",
+      "target": "192.168.10.50:80",
+      "window_start": 1793181660.0,
+      "syn_in": 13014,
+      "completion": 0.001,
+      "n_srcs": 15,
+      "why": "13014 SYNs in 10 s >= 300 and handshake completion 0.00 <= 0.2 from 15 sources",
+      "window_start_iso": "2026-10-28 10:01:00"
+    }
+  ],
+  "arp_events": []
+}

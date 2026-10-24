@@ -1,0 +1,19 @@
+{
+  "scenario": "s5_ambiguous",
+  "description": "Scenario 5 - ambiguous: low-and-slow scan (malicious) + bursty backup job (benign)",
+  "seed": 42,
+  "variant": "test",
+  "base_ts": 1793181600.0,
+  "n_packets": 47350,
+  "attacks": [
+    {
+      "label": "portscan",
+      "srcs": [
+        "192.168.10.88"
+      ],
+      "start": 1793181620.0,
+      "end": 1793181824.6190922,
+      "note": "low-and-slow SYN scan, 17 ports, one probe every ~12 s"
+    }
+  ]
+}

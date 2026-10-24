@@ -1,0 +1,17 @@
+{
+  "timing": {
+    "packets": 29251,
+    "capture_seconds": 119.3,
+    "windows": 566,
+    "extract_s": 0.598,
+    "detect_s": 0.154,
+    "models_s": 0.101,
+    "total_s": 0.752,
+    "packets_per_s": 38894.0,
+    "ms_per_window": 0.272,
+    "realtime_factor": 158.6
+  },
+  "events": [],
+  "victim_alerts": [],
+  "arp_events": []
+}
